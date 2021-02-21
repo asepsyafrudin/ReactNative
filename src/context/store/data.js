@@ -425,5 +425,18 @@ export const data = {
       rating: 4,
     },
   ],
-  cartProduct: [],
+  cartProduct: [
+    {
+      id: 1,
+      productId: 1,
+      date: '22 Jan 2020',
+      quantity: 2,
+    },
+    {
+      id: 2,
+      productId: 2,
+      date: '22 Jan 2020',
+      quantity: 3,
+    },
+  ],
 };

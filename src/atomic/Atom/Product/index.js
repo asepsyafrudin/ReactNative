@@ -18,7 +18,6 @@ function Product({
   const [data, setdata] = useState([]);
 
   let cart = state.cartProduct.find((value) => value.id === id);
-  console.log(cart);
   let badge;
   //   if (cart.counter > 0) {
   //     badge = (
