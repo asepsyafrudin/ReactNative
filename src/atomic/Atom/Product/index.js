@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {GlobalConsumer} from '../../../../src/context/store/store';
 import {Badge, Rating} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {ADD_TO_CART_PRODUCT, DELETE_CART_PRODUCT} from '../../../context/const';
+import {
+  ADD_TO_CART_PRODUCT,
+  UPDATE_TO_CART_PRODUCT,
+} from '../../../context/const';
 
 function Product({
   navigation,
@@ -12,27 +14,67 @@ function Product({
   priceProduct,
   imageUrl,
   rating,
+  stock,
   state,
   dispatch,
 }) {
-  const [data, setdata] = useState([]);
+  const [data, setdata] = useState({
+    id: new Date(),
+    date: new Date(),
+    productId: id,
+    quantity: 1,
+  });
 
-  let cart = state.cartProduct.find((value) => value.id === id);
   let badge;
-  //   if (cart.counter > 0) {
-  //     badge = (
-  //       <Badge
-  //         value={cart.counter}
-  //         status="error"
-  //         containerStyle={{position: 'absolute', top: 0, right: 0}}
-  //       />
-  //     );
-  //   }
+  let cart = state.cartProduct.find((value) => value.productId === id);
+  if (cart) {
+    if (cart.quantity > 0) {
+      badge = (
+        <Badge
+          value={cart.quantity}
+          status="error"
+          containerStyle={{position: 'absolute', top: 0, right: 0}}
+        />
+      );
+    }
+  }
 
   const addtoCart = () => {
-    let cart = state.cartProduct.find((value) => value.id == id);
-    if (cart === null) {
-      dispatch({type: ADD_TO_CART_PRODUCT});
+    let cart = state.cartProduct.find((value) => value.productId === id);
+    if (cart) {
+      if (cart.quantity < stock) {
+        let updateData = state.cartProduct;
+        for (let i = 0; i < updateData.length; i++) {
+          if (updateData[i].productId === cart.productId) {
+            updateData[i].quantity += 1;
+            dispatch({type: UPDATE_TO_CART_PRODUCT, payload: updateData});
+          }
+        }
+      } else {
+        alert('Stock tidak cukup');
+      }
+    } else {
+      dispatch({type: ADD_TO_CART_PRODUCT, payload: data});
+    }
+  };
+
+  const subToCart = () => {
+    let cart = state.cartProduct.find((value) => value.productId === id);
+    if (cart) {
+      if (cart.quantity === 1) {
+        let updateData = state.cartProduct.filter(
+          (value) => value.productId !== cart.productId,
+        );
+        dispatch({type: UPDATE_TO_CART_PRODUCT, payload: updateData});
+      } else if (cart.quantity > 0) {
+        let updateData = state.cartProduct;
+        for (let i = 0; i < updateData.length; i++) {
+          if (updateData[i].productId === cart.productId) {
+            updateData[i].quantity -= 1;
+            dispatch({type: UPDATE_TO_CART_PRODUCT, payload: updateData});
+          }
+        }
+      }
     }
   };
   return (
@@ -60,7 +102,7 @@ function Product({
         <TouchableOpacity style={style.buttonContainer} onPress={addtoCart}>
           <Text style={style.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={style.buttonContainer}>
+        <TouchableOpacity style={style.buttonContainer} onPress={subToCart}>
           <Text style={style.buttonText}>Sub to Cart</Text>
         </TouchableOpacity>
       </View>
@@ -80,7 +122,7 @@ const style = StyleSheet.create({
     marginVertical: 10,
     shadowColor: 'black',
     textAlign: 'center',
-    width: 120,
+    width: 150,
     backgroundColor: '#ffff',
     padding: 8,
   },

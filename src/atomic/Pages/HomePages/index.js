@@ -8,6 +8,11 @@ import Product from '../../Atom/Product';
 
 function HomePages({navigation, state, dispatch}) {
   const [search, setSearch] = useState('');
+  const dataFilter = search
+    ? state.dataProduct.filter((value) =>
+        value.nameProduct.toLowerCase().includes(search.toLowerCase()),
+      )
+    : state.dataProduct;
   return (
     <ScrollView>
       <View style={style.container}>
@@ -21,7 +26,7 @@ function HomePages({navigation, state, dispatch}) {
           value={search}
         />
         <View style={style.product}>
-          {state.dataProduct.map((value) => {
+          {dataFilter.map((value) => {
             return (
               <Product
                 key={value.id}
@@ -38,7 +43,9 @@ function HomePages({navigation, state, dispatch}) {
           })}
         </View>
         <Button
-          title="Go Checkout"
+          title={
+            'Go Checkout' + ' ' + state.cartProduct.length + ' ' + 'Product'
+          }
           onPress={() => navigation.navigate('Checkout')}
           color="blue"
           accessibilityLabel="Learn more about this purple button"

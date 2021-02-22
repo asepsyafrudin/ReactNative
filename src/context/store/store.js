@@ -1,5 +1,9 @@
 import React, {Component, createContext} from 'react';
-import {ADD_TO_CART_PRODUCT, SUB_TO_CART_PRODUCT} from '../const';
+import {
+  ADD_TO_CART_PRODUCT,
+  SUB_TO_CART_PRODUCT,
+  UPDATE_TO_CART_PRODUCT,
+} from '../const';
 import {data} from './data';
 
 const Context = createContext();
@@ -12,13 +16,13 @@ export const GlobalProvider = (Children) => {
     dispatch = (action) => {
       if (action.type === ADD_TO_CART_PRODUCT) {
         this.setState({
-          cartProduct: [{...state}, action.payload],
+          cartProduct: [...this.state.cartProduct, action.payload],
         });
       }
 
-      if (action.type === SUB_TO_CART_PRODUCT) {
+      if (action.type === UPDATE_TO_CART_PRODUCT) {
         this.setState({
-          cartProduct: [action.payload],
+          cartProduct: action.payload,
         });
       }
     };

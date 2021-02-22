@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "120280955549",
+    "project_id": "g2academy-fba90",
+    "storage_bucket": "g2academy-fba90.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120280955549:android:1d0973efb5722bb6fe7274",
+        "android_client_info": {
+          "package_name": "com.crudapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120280955549-t2ft4d60jn2cp5l2tc2sepeh2aajhmn4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx9gvAwWHbzZxcYVwpD2Qqj6zN5h3RTVI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120280955549-t2ft4d60jn2cp5l2tc2sepeh2aajhmn4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
