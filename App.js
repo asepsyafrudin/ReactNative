@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {GlobalProvider} from './src/context/store/store';
-import {Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from './src/atomic/Pages/HomePages';
